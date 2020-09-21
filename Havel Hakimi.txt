@@ -1,0 +1,38 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+int isPositive(vector<int> sequence){
+    for(auto i:sequence)
+        if(i>0)
+            return 1;
+    return 0;
+}
+int main() {
+    vector<int> sequence;
+    int V, v, ok;
+    cin >> V;
+    for (int i = 0; i < V; i++) {
+        cin >> v;
+        sequence.push_back(v);
+    }
+    while (isPositive(sequence)) {
+
+        for (int i = 0; i < V - 1; i++)
+            for (int j = i + 1; j < V; j++)
+                if (sequence[i] < sequence[j]) {
+                    sort(sequence.begin(), sequence.end(), greater<>());
+                    i = V;
+                    j = V;
+                }
+        int last=sequence[0];
+        for(int i=0;i<V-1;i++)
+            sequence[i]=sequence[i+1];
+        V--;
+        sequence.resize(V);
+        for(int i=0;i<V && i<last;i++)
+            sequence[i]--;
+
+    }
+    for(int i=0;i<V;i++)
+        cout<<sequence[i]<<" ";
+}
